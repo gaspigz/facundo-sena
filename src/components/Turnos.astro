@@ -1,0 +1,178 @@
+---
+import { proceso, horarios, perfil } from '../data/site';
+import SectionHead from './SectionHead.astro';
+---
+
+<section class="section" id="turnos">
+  <div class="shell">
+    <SectionHead
+      index="04"
+      label="Proceso"
+      title="Tres pasos, <br />sin <em>vueltas</em>"
+      sub="Así funciona una consulta con nutricionista deportivo en Rosario, desde la primera medición hasta los controles mensuales."
+    />
+
+    <ol class="pasos">
+      {proceso.map((p, i) => (
+        <li class="paso" style={`--d:${i * 120}ms`} data-reveal>
+          <span class="mono paso-n">{p.n}</span>
+          <div class="paso-body">
+            <h3 class="paso-title">{p.titulo}</h3>
+            <p class="mono paso-dur">{p.dur}</p>
+            <p class="paso-desc">{p.desc}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <div class="panel" data-reveal>
+      <div class="panel-col">
+        <p class="mono panel-k">Consultorio</p>
+        <p class="panel-v">Mendoza 2290</p>
+        <p class="panel-note">Timbre color negro · {perfil.ciudad}</p>
+      </div>
+
+      <div class="panel-col">
+        <p class="mono panel-k">Presencial</p>
+        <ul class="dias">
+          {horarios.map((h) => (
+            <li><span>{h.dia}</span><span class="mono dias-h">{h.hora}</span></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="panel-col">
+        <p class="mono panel-k">Online</p>
+        <p class="panel-v">A coordinar</p>
+        <p class="panel-note">Misma consulta y mismo plan, desde cualquier lugar del país.</p>
+      </div>
+
+      <div class="panel-col panel-col--warn">
+        <p class="mono panel-k panel-k--warn">Cancelaciones</p>
+        <p class="panel-note">
+          Si no podés asistir al turno programado, avisá con
+          <strong>48 horas de anticipación</strong>. De lo contrario se abona la
+          mitad del valor de la consulta.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pasos {
+    list-style: none;
+    margin: 0 0 clamp(3rem, 7vw, 5rem);
+    padding: 0;
+    display: grid;
+    gap: 1px;
+    background: var(--line);
+    border-block: 1px solid var(--line);
+  }
+
+  @media (min-width: 860px) {
+    .pasos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  .paso {
+    background: var(--ink);
+    padding: clamp(1.6rem, 3.5vw, 2.5rem) clamp(1.25rem, 3vw, 2rem) clamp(1.8rem, 4vw, 2.75rem) 0;
+    display: grid;
+    grid-template-columns: 2.6rem minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 860px) {
+    .paso { padding-left: clamp(1.25rem, 3vw, 2rem); }
+    .paso:first-child { padding-left: 0; }
+  }
+
+  .paso-n {
+    font-size: 0.625rem;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    padding-top: 0.35rem;
+  }
+
+  .paso-title {
+    font-size: clamp(1.125rem, 2.2vw, 1.4375rem);
+    font-variation-settings: 'wdth' 104;
+  }
+
+  .paso-dur {
+    margin-top: 0.55rem;
+    font-size: 0.5625rem;
+    color: var(--mute);
+    letter-spacing: 0.16em;
+  }
+
+  .paso-desc {
+    margin-top: 1rem;
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--bone-dim);
+    max-width: 38ch;
+  }
+
+  /* ---- panel de datos ---- */
+
+  .panel {
+    display: grid;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  @media (min-width: 720px)  { .panel { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1080px) { .panel { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+  .panel-col {
+    background: var(--ink-2);
+    padding: clamp(1.4rem, 3vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .panel-k { font-size: 0.5625rem; color: var(--gold); letter-spacing: 0.2em; }
+  .panel-k--warn { color: var(--bone); }
+
+  .panel-v {
+    font-family: var(--display);
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    font-weight: 600;
+    font-variation-settings: 'wdth' 104;
+    line-height: 1.2;
+  }
+
+  .panel-note {
+    font-size: 0.8125rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--mute);
+  }
+
+  .panel-note strong { color: var(--bone-dim); font-weight: 500; }
+
+  .panel-col--warn { background: var(--ink-3); }
+
+  .dias { list-style: none; margin: 0.15rem 0 0; padding: 0; display: grid; gap: 0.5rem; }
+
+  .dias li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: baseline;
+    font-family: var(--display);
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--bone-dim);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--line-2);
+  }
+
+  .dias li:last-child { border-bottom: 0; padding-bottom: 0; }
+
+  .dias-h { font-size: 0.625rem; color: var(--mute); font-variant-numeric: tabular-nums; }
+</style>

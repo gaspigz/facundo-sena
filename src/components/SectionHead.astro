@@ -1,0 +1,17 @@
+---
+interface Props {
+  index: string;
+  label: string;
+  title: string;
+  sub?: string;
+}
+const { index, label, title, sub } = Astro.props;
+---
+
+<div class="sec-head">
+  <p class="sec-index">{index} / {label}</p>
+  <div>
+    <h2 class="sec-title" set:html={title} data-reveal></h2>
+    {sub && <p class="serif-lead sec-sub" style="--d:120ms" data-reveal>{sub}</p>}
+  </div>
+</div>

@@ -1,0 +1,178 @@
+---
+import { cta } from '../data/site';
+
+const opciones = [
+  { k: 'A', t: 'Antropometría',                 d: 'Estudio de composición corporal ISAK II', href: cta.antropometria },
+  { k: 'B', t: 'Consulta nutricional presencial', d: 'En el consultorio de Mendoza 2290, Rosario', href: cta.presencial },
+  { k: 'C', t: 'Consulta nutricional online',     d: 'Videollamada, día y horario a coordinar',    href: cta.online },
+];
+---
+
+<section class="cta" id="reservar">
+  <div class="cta-bg" aria-hidden="true">
+    <video src="/videos/running.mp4" muted loop playsinline preload="none" data-lazyplay></video>
+    <div class="cta-veil"></div>
+  </div>
+
+  <div class="shell cta-in">
+    <div class="cta-head" data-reveal>
+      <p class="mono cta-eyebrow">06 / Reservá tu turno</p>
+      <h2 class="cta-title">
+        <span class="ln">Empecemos</span>
+        <span class="ln">por el primer</span>
+        <span class="ln gold">número.</span>
+      </h2>
+      <p class="serif-lead cta-lead">
+        Elegí la modalidad y escribime por WhatsApp. Contame tus objetivos y qué
+        actividad física hacés, y coordinamos el turno.
+      </p>
+    </div>
+
+    <div class="opciones">
+      {opciones.map((o, i) => (
+        <a class="opcion" href={o.href} target="_blank" rel="noopener" style={`--d:${i * 110}ms`} data-reveal>
+          <span class="mono opcion-k">{o.k}</span>
+          <span class="opcion-body">
+            <span class="opcion-t">{o.t}</span>
+            <span class="opcion-d">{o.d}</span>
+          </span>
+          <span class="opcion-ico" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M13.6 2.33A7.9 7.9 0 0 0 8 0a7.94 7.94 0 0 0-6.88 11.9L0 16l4.2-1.1A7.93 7.93 0 0 0 8 15.87 7.94 7.94 0 0 0 13.6 2.33ZM8 14.53a6.6 6.6 0 0 1-3.36-.92l-.24-.14-2.5.65.67-2.43-.16-.25a6.59 6.59 0 1 1 5.59 3.09Zm3.62-4.94c-.2-.1-1.17-.58-1.35-.64-.18-.07-.31-.1-.44.1s-.51.64-.63.77-.23.15-.43.05a5.4 5.4 0 0 1-1.6-.98 6 6 0 0 1-1.1-1.37c-.12-.2 0-.31.09-.41s.2-.23.3-.35a1.4 1.4 0 0 0 .2-.33.37.37 0 0 0 0-.35c0-.1-.44-1.07-.6-1.46s-.32-.33-.44-.34h-.38a.72.72 0 0 0-.52.24 2.19 2.19 0 0 0-.69 1.63 3.81 3.81 0 0 0 .8 2.02 8.72 8.72 0 0 0 3.33 2.94 11.2 11.2 0 0 0 1.11.41 2.67 2.67 0 0 0 1.23.08 2 2 0 0 0 1.32-.93 1.64 1.64 0 0 0 .11-.93c-.05-.08-.18-.13-.38-.23Z" />
+            </svg>
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    padding-block: clamp(5.5rem, 14vh, 10rem);
+    border-top: 1px solid var(--line);
+  }
+
+  .cta-bg { position: absolute; inset: 0; z-index: -1; }
+
+  .cta-bg video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.2) brightness(0.5);
+    opacity: 0.4;
+  }
+
+  .cta-veil {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, var(--ink) 0%, color-mix(in srgb, var(--ink) 55%, transparent) 40%, var(--ink) 100%),
+      radial-gradient(90% 70% at 20% 50%, color-mix(in srgb, var(--ink) 88%, transparent), transparent 70%);
+  }
+
+  .cta-in {
+    display: grid;
+    gap: clamp(2.75rem, 7vw, 5rem);
+  }
+
+  @media (min-width: 1000px) {
+    .cta-in {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+    }
+  }
+
+  .cta-eyebrow { color: var(--gold); margin-bottom: 1.5rem; }
+
+  .cta-title {
+    font-size: clamp(2.25rem, 5.4vw, 4rem);
+    font-variation-settings: 'wdth' 115;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .cta-title .ln { display: block; }
+
+  .cta-lead { margin-top: 1.75rem; max-width: 40ch; }
+
+  /* ---- opciones ---- */
+
+  .opciones {
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+
+  .opcion {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr) 2rem;
+    gap: 1rem;
+    align-items: center;
+    padding: clamp(1.35rem, 3vw, 1.9rem) 0;
+    border-bottom: 1px solid var(--line);
+    isolation: isolate;
+    transition: padding-inline 0.5s var(--ease);
+  }
+
+  .opcion::before {
+    content: '';
+    position: absolute;
+    inset: 0 -1.25rem;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.55s var(--ease);
+    z-index: -1;
+  }
+
+  .opcion:hover::before,
+  .opcion:focus-visible::before { transform: scaleX(1); }
+
+  .opcion:hover, .opcion:focus-visible { padding-inline: 1.25rem; }
+
+  .opcion-k {
+    font-size: 0.625rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    transition: color 0.4s var(--ease);
+  }
+
+  .opcion-body { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .opcion-t {
+    font-family: var(--display);
+    font-size: clamp(1.0625rem, 2vw, 1.375rem);
+    font-weight: 700;
+    font-variation-settings: 'wdth' 104;
+    line-height: 1.15;
+    transition: color 0.4s var(--ease);
+  }
+
+  .opcion-d {
+    font-size: 0.8125rem;
+    font-weight: 300;
+    color: var(--mute);
+    transition: color 0.4s var(--ease);
+  }
+
+  .opcion-ico {
+    display: grid;
+    place-items: center;
+    color: var(--mute);
+    transition: color 0.4s var(--ease), transform 0.5s var(--ease);
+  }
+
+  .opcion:hover .opcion-k,
+  .opcion:hover .opcion-t,
+  .opcion:hover .opcion-d,
+  .opcion:hover .opcion-ico,
+  .opcion:focus-visible .opcion-k,
+  .opcion:focus-visible .opcion-t,
+  .opcion:focus-visible .opcion-d,
+  .opcion:focus-visible .opcion-ico { color: #14100A; }
+
+  .opcion:hover .opcion-ico { transform: scale(1.12); }
+</style>

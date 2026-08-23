@@ -1,0 +1,219 @@
+---
+import { trayectoria, galeria } from '../data/site';
+import SectionHead from './SectionHead.astro';
+
+// El carrusel necesita el listado duplicado para que el loop no tenga corte.
+const cinta = [...trayectoria, ...trayectoria, ...trayectoria];
+---
+
+<section class="section" id="trayectoria">
+  <div class="shell">
+    <SectionHead
+      index="02"
+      label="Trayectoria"
+      title="Del consultorio <br />al <em>vestuario</em>"
+      sub="Nutrición deportiva aplicada en primera división, en planteles de rugby de selección y en el consultorio de Rosario. La misma metodología, distinta escala."
+    />
+
+    <div class="grid">
+      <div class="bio" data-reveal>
+        <p class="serif-lead">
+          Trabajé la nutrición deportiva donde el margen de error es mínimo:
+          la primera división del fútbol argentino con
+          <strong>Newell's Old Boys</strong>, el plantel de rugby del
+          <strong>Club Universitario de Rosario</strong> y deportistas de
+          selección en ultra trail, maratón, rugby y fútbol profesional en
+          Europa.
+        </p>
+        <p class="bio-p">
+          Esa experiencia bajó al consultorio de Mendoza 2290, en el centro de
+          Rosario: el mismo protocolo de antropometría y la misma planificación
+          alimentaria que usa un plantel profesional, adaptados a quien entrena
+          por gusto, compite los fines de semana o se prepara para su primera
+          maratón.
+        </p>
+        <p class="bio-p">
+          También llevo la nutrición al aula: fui disertante en el
+          <strong>CENN</strong>, el Congreso Nacional de Educación, Nutrición y
+          Neurociencias, en la provincia de Entre Ríos.
+        </p>
+      </div>
+
+      <div class="shots">
+        {galeria.map((g, i) => (
+          <figure class="shot" style={`--d:${i * 130}ms`} data-reveal>
+            <img src={g.src} alt={g.alt} loading="lazy" decoding="async" />
+            <figcaption class="mono">{g.pie}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- carrusel infinito de instituciones -->
+  <div class="marquee" role="region" aria-label="Instituciones donde trabajó Facundo Sena">
+    <div class="marquee-track">
+      {cinta.map((t, i) => (
+        <div class="chip" aria-hidden={i >= trayectoria.length ? 'true' : undefined}>
+          <span class="crest">
+            {t.escudo
+              ? <img src={t.escudo} alt="" loading="lazy" />
+              : <span class="crest-txt">{t.sigla}</span>}
+          </span>
+          <span class="chip-txt">
+            <span class="chip-name">{t.nombre}</span>
+            <span class="mono chip-rol">{t.rol}</span>
+            <span class="mono chip-anios">{t.anios}</span>
+          </span>
+        </div>
+      ))}
+    </div>
+    <div class="marquee-fade marquee-fade--l" aria-hidden="true"></div>
+    <div class="marquee-fade marquee-fade--r" aria-hidden="true"></div>
+  </div>
+</section>
+
+<style>
+  .grid { display: grid; gap: clamp(2.5rem, 6vw, 4.5rem); }
+
+  @media (min-width: 980px) {
+    .grid {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      align-items: start;
+    }
+  }
+
+  .bio strong {
+    font-weight: 500;
+    color: var(--bone);
+  }
+
+  .bio-p {
+    margin-top: 1.35rem;
+    color: var(--mute);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 48ch;
+  }
+
+  .bio-p strong { color: var(--bone-dim); font-weight: 500; }
+
+  /* ---- trío editorial ---- */
+
+  .shots {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.75rem, 2vw, 1.25rem);
+  }
+
+  .shot { margin: 0; }
+
+  .shot:first-child { grid-column: 1 / -1; }
+
+  .shot img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border: 1px solid var(--line);
+    filter: grayscale(1) contrast(1.08) brightness(0.88);
+    transition: filter 0.7s var(--ease), transform 0.9s var(--ease);
+  }
+
+  .shot:first-child img { aspect-ratio: 16 / 9; }
+  .shot:nth-child(2) img { object-position: 50% 30%; }
+
+  .shot:hover img { filter: none; transform: scale(1.012); }
+
+  .shot figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.5625rem;
+    color: var(--mute);
+    letter-spacing: 0.14em;
+  }
+
+  /* ---- carrusel infinito ---- */
+
+  .marquee {
+    position: relative;
+    margin-top: clamp(3.5rem, 8vw, 6rem);
+    padding-block: clamp(1.5rem, 3vw, 2.25rem);
+    border-block: 1px solid var(--line);
+    overflow: hidden;
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    gap: clamp(2rem, 5vw, 4rem);
+    animation: slide 52s linear infinite;
+  }
+
+  @keyframes slide {
+    to { transform: translateX(calc(-100% / 3)); }
+  }
+
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track { animation-play-state: paused; }
+
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    flex: none;
+    padding-right: clamp(2rem, 5vw, 4rem);
+    border-right: 1px solid var(--line-2);
+  }
+
+  .crest {
+    width: 54px; height: 54px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--ink-2);
+    overflow: hidden;
+    transition: border-color 0.5s var(--ease);
+  }
+
+  .chip:hover .crest { border-color: var(--gold); }
+
+  .crest img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+
+  .crest-txt {
+    font-family: var(--display);
+    font-size: 0.6875rem;
+    font-weight: 800;
+    font-variation-settings: 'wdth' 78;
+    letter-spacing: 0.06em;
+    color: var(--gold);
+  }
+
+  .chip-txt { display: flex; flex-direction: column; gap: 0.22rem; white-space: nowrap; }
+
+  .chip-name {
+    font-family: var(--display);
+    font-size: 1rem;
+    font-weight: 600;
+    font-variation-settings: 'wdth' 100;
+    color: var(--bone);
+  }
+
+  .chip-rol   { font-size: 0.5625rem; color: var(--mute); letter-spacing: 0.14em; }
+  .chip-anios { font-size: 0.5625rem; color: var(--gold-dim); letter-spacing: 0.14em; }
+
+  .marquee-fade {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: clamp(3rem, 10vw, 9rem);
+    pointer-events: none;
+  }
+  .marquee-fade--l { left: 0;  background: linear-gradient(90deg, var(--ink), transparent); }
+  .marquee-fade--r { right: 0; background: linear-gradient(270deg, var(--ink), transparent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+    .marquee { overflow-x: auto; }
+  }
+</style>

@@ -1,0 +1,271 @@
+---
+import '../styles/global.css';
+import { SITE, seo, perfil, servicios, faq, cta } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = seo.title, description = seo.description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, SITE).href;
+const img = new URL('/perfil1.jpeg', SITE).href;
+
+const negocio = {
+  '@type': ['MedicalBusiness', 'LocalBusiness'],
+  '@id': `${SITE}#negocio`,
+  name: 'Nutrición FS',
+  alternateName: 'Lic. Facundo Sena, nutricionista deportivo',
+  description:
+    'Consultorio de nutrición deportiva y antropometría ISAK II en Rosario. Estudio de composición corporal, plan alimentario para deportistas y seguimiento presencial u online.',
+  url: canonical,
+  image: img,
+  logo: new URL('/logo-fs.png', SITE).href,
+  telephone: perfil.telefonoE164,
+  priceRange: '$$',
+  currenciesAccepted: 'ARS',
+  medicalSpecialty: 'Nutrition',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Mendoza 2290',
+    addressLocality: 'Rosario',
+    addressRegion: 'Santa Fe',
+    postalCode: perfil.cp,
+    addressCountry: 'AR',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: perfil.geo.lat, longitude: perfil.geo.lng },
+  areaServed: [
+    ...perfil.zonas.map((z) => ({ '@type': 'City', name: z })),
+    { '@type': 'Country', name: 'Argentina' },
+  ],
+  sameAs: [perfil.instagram],
+  founder: { '@id': `${SITE}#facundo` },
+  employee: { '@id': `${SITE}#facundo` },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Monday', opens: '15:00', closes: '20:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Wednesday', opens: '15:00', closes: '20:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Thursday', opens: '09:00', closes: '15:00' },
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Servicios de nutrición deportiva',
+    itemListElement: servicios.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: `${s.titulo}: ${s.subtitulo}` },
+    })),
+  },
+  potentialAction: {
+    '@type': 'ReserveAction',
+    name: 'Reservar turno por WhatsApp',
+    target: { '@type': 'EntryPoint', urlTemplate: cta.presencial },
+  },
+};
+
+const persona = {
+  '@type': 'Person',
+  '@id': `${SITE}#facundo`,
+  name: 'Facundo Sena',
+  givenName: 'Facundo',
+  familyName: 'Sena',
+  honorificPrefix: 'Lic.',
+  jobTitle: 'Licenciado en Nutrición y antropometrista ISAK II',
+  description:
+    'Licenciado en Nutrición (Mat. 1883/2) especializado en nutrición deportiva y antropometrista ISAK Nivel II. Nutricionista de la primera división de Newell\'s Old Boys entre 2022 y 2023 y del plantel de rugby del Club Universitario de Rosario.',
+  image: img,
+  url: canonical,
+  telephone: perfil.telefonoE164,
+  worksFor: { '@id': `${SITE}#negocio` },
+  sameAs: [perfil.instagram],
+  knowsAbout: [
+    'Nutrición deportiva',
+    'Antropometría ISAK',
+    'Composición corporal',
+    'Cineantropometría',
+    'Planificación alimentaria para deportistas',
+    'Rendimiento deportivo',
+  ],
+  hasCredential: [
+    {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'Matrícula profesional',
+      name: 'Licenciado en Nutrición, Mat. 1883/2',
+    },
+    {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'Certificación',
+      name: 'Antropometrista ISAK Nivel II',
+      recognizedBy: {
+        '@type': 'Organization',
+        name: 'International Society for the Advancement of Kinanthropometry (ISAK)',
+      },
+    },
+  ],
+};
+
+const serviciosLd = servicios.map((s, i) => ({
+  '@type': 'Service',
+  '@id': `${SITE}#servicio-${i + 1}`,
+  name: `${s.titulo}: ${s.subtitulo}`,
+  description: s.desc,
+  serviceType: s.titulo,
+  provider: { '@id': `${SITE}#negocio` },
+  areaServed: perfil.zonas.map((z) => ({ '@type': 'City', name: z })),
+  availableChannel: [
+    { '@type': 'ServiceChannel', name: 'Presencial', servicePhone: perfil.telefonoE164 },
+    { '@type': 'ServiceChannel', name: 'Online', serviceUrl: cta.online },
+  ],
+}));
+
+// FAQPage es elegible para rich results en sitios de salud (restricción de Google, ago-2023).
+const faqLd = {
+  '@type': 'FAQPage',
+  '@id': `${SITE}#faq`,
+  mainEntity: faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const grafo = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE}#sitio`,
+      url: SITE,
+      name: 'Nutrición FS',
+      inLanguage: 'es-AR',
+      publisher: { '@id': `${SITE}#negocio` },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': canonical,
+      url: canonical,
+      name: title,
+      description,
+      inLanguage: 'es-AR',
+      isPartOf: { '@id': `${SITE}#sitio` },
+      about: { '@id': `${SITE}#negocio` },
+      primaryImageOfPage: img,
+      dateModified: seo.actualizado,
+    },
+    negocio,
+    persona,
+    ...serviciosLd,
+    faqLd,
+  ],
+};
+---
+
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0A0A0B" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Nutrición FS" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={img} />
+    <meta property="og:image:alt" content="Lic. Facundo Sena, nutricionista deportivo en Rosario" />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={img} />
+
+    <meta name="author" content="Lic. Facundo Sena" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="geo.region" content="AR-S" />
+    <meta name="geo.placename" content="Rosario" />
+    <meta name="geo.position" content={`${perfil.geo.lat};${perfil.geo.lng}`} />
+    <meta name="ICBM" content={`${perfil.geo.lat}, ${perfil.geo.lng}`} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Newsreader:ital,opsz,wght@0,6..72,200..700;1,6..72,200..500&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(grafo)} />
+  </head>
+
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <slot />
+
+    <script>
+      // Revelado progresivo, una sola vez por elemento.
+      const items = document.querySelectorAll('[data-reveal]');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!reduce && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (!e.isIntersecting) continue;
+              e.target.classList.add('is-in');
+              io.unobserve(e.target);
+            }
+          },
+          { rootMargin: '0px 0px -12% 0px', threshold: 0.08 }
+        );
+        items.forEach((el) => io.observe(el));
+      } else {
+        items.forEach((el) => el.classList.add('is-in'));
+      }
+
+      // Barra superior: pasa a estado compacto al salir del hero.
+      const bar = document.querySelector('[data-bar]');
+      if (bar) {
+        const onScroll = () => bar.classList.toggle('is-stuck', window.scrollY > 24);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
+
+      // El video del hero pesa: sólo se descarga en pantallas grandes y sin ahorro de datos.
+      const hero = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+      if (hero) {
+        const conn = (navigator as any).connection;
+        const vale =
+          window.matchMedia('(min-width: 760px)').matches &&
+          !reduce &&
+          conn?.saveData !== true &&
+          !/2g/.test(conn?.effectiveType ?? '');
+        if (vale) {
+          hero.src = hero.dataset.heroVideo!;
+          hero.play().catch(() => {});
+        }
+      }
+
+      // Los videos decorativos sólo se reproducen mientras están a la vista.
+      const clips = document.querySelectorAll<HTMLVideoElement>('video[data-lazyplay]');
+      if (clips.length && 'IntersectionObserver' in window) {
+        const vo = new IntersectionObserver((entries) => {
+          for (const e of entries) {
+            const v = e.target as HTMLVideoElement;
+            if (e.isIntersecting) {
+              if (!v.dataset.loaded) {
+                v.dataset.loaded = '1';
+                v.load();
+              }
+              v.play().catch(() => {});
+            } else {
+              v.pause();
+            }
+          }
+        }, { threshold: 0.15 });
+        clips.forEach((v) => vo.observe(v));
+      }
+    </script>
+  </body>
+</html>

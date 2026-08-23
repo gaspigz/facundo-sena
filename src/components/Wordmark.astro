@@ -1,0 +1,25 @@
+---
+interface Props { size?: string; class?: string }
+const { size = '1.5rem', class: cls = '' } = Astro.props;
+---
+
+<span class={`wm ${cls}`} style={`--wm: ${size}`} aria-hidden="true">
+  <span class="wm-f">f</span><span class="wm-s">s</span>
+</span>
+
+<style>
+  .wm {
+    display: inline-flex;
+    align-items: baseline;
+    font-family: var(--display);
+    font-size: var(--wm);
+    font-weight: 900;
+    font-variation-settings: 'wdth' 95;
+    line-height: 1;
+    letter-spacing: -0.06em;
+    transform: skewX(-9deg);
+    user-select: none;
+  }
+  .wm-f { color: var(--bone); }
+  .wm-s { color: var(--gold); }
+</style>

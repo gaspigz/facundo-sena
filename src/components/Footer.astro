@@ -1,0 +1,144 @@
+---
+import Wordmark from './Wordmark.astro';
+import { perfil, WA, seo } from '../data/site';
+const anio = new Date().getFullYear();
+const actualizado = new Date(`${seo.actualizado}T12:00:00`).toLocaleDateString('es-AR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<footer class="pie">
+  <div class="ruler-x" aria-hidden="true"></div>
+
+  <div class="shell pie-in">
+    <div class="pie-brand">
+      <a href="#top" aria-label="Volver arriba"><Wordmark size="2.75rem" /></a>
+      <p class="pie-nombre">Lic. {perfil.nombre}</p>
+      <p class="mono pie-cred">{perfil.titulo} · {perfil.matricula}<br />{perfil.isak}</p>
+    </div>
+
+    <div class="pie-col">
+      <p class="mono pie-k">Consultorio</p>
+      <p class="pie-t">Mendoza 2290<br />Rosario, Santa Fe, Argentina</p>
+      <p class="pie-mini">Nutrición deportiva y antropometría ISAK II</p>
+    </div>
+
+    <div class="pie-col">
+      <p class="mono pie-k">Contacto</p>
+      <a class="pie-link" href={WA} target="_blank" rel="noopener">WhatsApp · 341 562-9177</a>
+      <a class="pie-link" href={perfil.instagram} target="_blank" rel="noopener">
+        Instagram · {perfil.instagramHandle}
+      </a>
+    </div>
+
+    <div class="pie-col">
+      <p class="mono pie-k">Secciones</p>
+      <a class="pie-link" href="#servicios">Servicios</a>
+      <a class="pie-link" href="#trayectoria">Trayectoria</a>
+      <a class="pie-link" href="#deportistas">Deportistas</a>
+      <a class="pie-link" href="#turnos">Turnos</a>
+      <a class="pie-link" href="#preguntas">Preguntas frecuentes</a>
+    </div>
+  </div>
+
+  <div class="shell pie-legal">
+    <p class="mono">© {anio} Nutrición FS — Todos los derechos reservados</p>
+    <p class="mono pie-loc">
+      Rosario, Argentina · Contenido actualizado el
+      <time datetime={seo.actualizado}>{actualizado}</time>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .pie {
+    background: var(--ink-2);
+    border-top: 1px solid var(--line);
+    padding-top: clamp(3rem, 7vw, 5rem);
+  }
+
+  .pie > .ruler-x { margin-bottom: clamp(2.5rem, 6vw, 4rem); }
+
+  .pie-in {
+    display: grid;
+    gap: clamp(2.25rem, 5vw, 3rem);
+    padding-bottom: clamp(3rem, 7vw, 4.5rem);
+  }
+
+  @media (min-width: 720px)  { .pie-in { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1020px) { .pie-in { grid-template-columns: 1.4fr repeat(3, minmax(0, 1fr)); } }
+
+  .pie-nombre {
+    font-family: var(--display);
+    font-size: 1.125rem;
+    font-weight: 600;
+    font-variation-settings: 'wdth' 104;
+    margin-top: 1.1rem;
+  }
+
+  .pie-cred {
+    font-size: 0.5625rem;
+    color: var(--mute);
+    line-height: 1.8;
+    letter-spacing: 0.14em;
+    margin-top: 0.5rem;
+  }
+
+  .pie-col { display: flex; flex-direction: column; gap: 0.55rem; align-items: flex-start; }
+
+  .pie-k { font-size: 0.5625rem; color: var(--gold); letter-spacing: 0.2em; margin-bottom: 0.35rem; }
+
+  .pie-t {
+    font-family: var(--display);
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--bone-dim);
+  }
+
+  .pie-mini {
+    font-size: 0.75rem;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--mute-2);
+    max-width: 22ch;
+  }
+
+  .pie-link {
+    position: relative;
+    font-family: var(--display);
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: var(--bone-dim);
+    transition: color 0.35s var(--ease);
+  }
+
+  .pie-link::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -2px;
+    width: 100%; height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.45s var(--ease);
+  }
+
+  .pie-link:hover { color: var(--bone); }
+  .pie-link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+  .pie-legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--line);
+    color: var(--mute-2);
+    font-size: 0.5625rem;
+  }
+
+  .pie-loc { color: var(--mute-2); }
+</style>
