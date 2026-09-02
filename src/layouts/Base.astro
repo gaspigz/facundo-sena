@@ -8,7 +8,7 @@ interface Props {
 }
 const { title = seo.title, description = seo.description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, SITE).href;
-const img = new URL('/perfil1.jpeg', SITE).href;
+const img = new URL('/perfil1.jpg', SITE).href;
 
 const negocio = {
   '@type': ['MedicalBusiness', 'LocalBusiness'],

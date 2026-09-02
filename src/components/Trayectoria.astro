@@ -1,9 +1,6 @@
 ---
-import { trayectoria, galeria } from '../data/site';
+import { galeria, futbolCracks } from '../data/site';
 import SectionHead from './SectionHead.astro';
-
-// El carrusel necesita el listado duplicado para que el loop no tenga corte.
-const cinta = [...trayectoria, ...trayectoria, ...trayectoria];
 ---
 
 <section class="section" id="trayectoria">
@@ -12,7 +9,7 @@ const cinta = [...trayectoria, ...trayectoria, ...trayectoria];
       index="02"
       label="Trayectoria"
       title="Del consultorio <br />al <em>vestuario</em>"
-      sub="Nutrición deportiva aplicada en primera división, en planteles de rugby de selección y en el consultorio de Rosario. La misma metodología, distinta escala."
+      sub="Mi trabajo recorre desde el consultorio, pasando por el rugby amateur y de selección, hasta las canchas del fútbol profesional argentino."
     />
 
     <div class="grid">
@@ -33,6 +30,15 @@ const cinta = [...trayectoria, ...trayectoria, ...trayectoria];
           maratón.
         </p>
         <p class="bio-p">
+          Ese recorrido incluye el asesoramiento a
+          <a class="bio-a" href={futbolCracks.instagram} target="_blank" rel="noopener">Fútbol Cracks</a>,
+          agencia de representación de jugadores, el trabajo con
+          <strong>Cafeteros Pro</strong> en el <strong>SLAR 2022</strong>, el
+          <strong>seleccionado M17 de la Unión de Rugby de Rosario</strong> en 2022
+          y la charla de nutrición deportiva que me solicitó el futsal de
+          <strong>Tiro Suizo</strong> en 2023.
+        </p>
+        <p class="bio-p">
           También llevo la nutrición al aula: fui disertante en el
           <strong>CENN</strong>, el Congreso Nacional de Educación, Nutrición y
           Neurociencias, en la provincia de Entre Ríos.
@@ -50,27 +56,6 @@ const cinta = [...trayectoria, ...trayectoria, ...trayectoria];
     </div>
   </div>
 
-  <!-- carrusel infinito de instituciones -->
-  <div class="marquee" role="region" aria-label="Instituciones donde trabajó Facundo Sena">
-    <div class="marquee-track">
-      {cinta.map((t, i) => (
-        <div class="chip" aria-hidden={i >= trayectoria.length ? 'true' : undefined}>
-          <span class="crest">
-            {t.escudo
-              ? <img src={t.escudo} alt="" loading="lazy" />
-              : <span class="crest-txt">{t.sigla}</span>}
-          </span>
-          <span class="chip-txt">
-            <span class="chip-name">{t.nombre}</span>
-            <span class="mono chip-rol">{t.rol}</span>
-            <span class="mono chip-anios">{t.anios}</span>
-          </span>
-        </div>
-      ))}
-    </div>
-    <div class="marquee-fade marquee-fade--l" aria-hidden="true"></div>
-    <div class="marquee-fade marquee-fade--r" aria-hidden="true"></div>
-  </div>
 </section>
 
 <style>
@@ -98,6 +83,15 @@ const cinta = [...trayectoria, ...trayectoria, ...trayectoria];
   }
 
   .bio-p strong { color: var(--bone-dim); font-weight: 500; }
+
+  .bio-a {
+    color: var(--bone);
+    font-weight: 500;
+    border-bottom: 1px solid var(--gold-dim);
+    transition: color 0.35s var(--ease), border-color 0.35s var(--ease);
+  }
+
+  .bio-a:hover { color: var(--gold); border-color: var(--gold); }
 
   /* ---- trío editorial ---- */
 
@@ -132,88 +126,4 @@ const cinta = [...trayectoria, ...trayectoria, ...trayectoria];
     letter-spacing: 0.14em;
   }
 
-  /* ---- carrusel infinito ---- */
-
-  .marquee {
-    position: relative;
-    margin-top: clamp(3.5rem, 8vw, 6rem);
-    padding-block: clamp(1.5rem, 3vw, 2.25rem);
-    border-block: 1px solid var(--line);
-    overflow: hidden;
-  }
-
-  .marquee-track {
-    display: flex;
-    width: max-content;
-    gap: clamp(2rem, 5vw, 4rem);
-    animation: slide 52s linear infinite;
-  }
-
-  @keyframes slide {
-    to { transform: translateX(calc(-100% / 3)); }
-  }
-
-  .marquee:hover .marquee-track,
-  .marquee:focus-within .marquee-track { animation-play-state: paused; }
-
-  .chip {
-    display: flex;
-    align-items: center;
-    gap: 1.1rem;
-    flex: none;
-    padding-right: clamp(2rem, 5vw, 4rem);
-    border-right: 1px solid var(--line-2);
-  }
-
-  .crest {
-    width: 54px; height: 54px;
-    flex: none;
-    display: grid;
-    place-items: center;
-    border: 1px solid var(--line);
-    border-radius: 50%;
-    background: var(--ink-2);
-    overflow: hidden;
-    transition: border-color 0.5s var(--ease);
-  }
-
-  .chip:hover .crest { border-color: var(--gold); }
-
-  .crest img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
-
-  .crest-txt {
-    font-family: var(--display);
-    font-size: 0.6875rem;
-    font-weight: 800;
-    font-variation-settings: 'wdth' 78;
-    letter-spacing: 0.06em;
-    color: var(--gold);
-  }
-
-  .chip-txt { display: flex; flex-direction: column; gap: 0.22rem; white-space: nowrap; }
-
-  .chip-name {
-    font-family: var(--display);
-    font-size: 1rem;
-    font-weight: 600;
-    font-variation-settings: 'wdth' 100;
-    color: var(--bone);
-  }
-
-  .chip-rol   { font-size: 0.5625rem; color: var(--mute); letter-spacing: 0.14em; }
-  .chip-anios { font-size: 0.5625rem; color: var(--gold-dim); letter-spacing: 0.14em; }
-
-  .marquee-fade {
-    position: absolute;
-    top: 0; bottom: 0;
-    width: clamp(3rem, 10vw, 9rem);
-    pointer-events: none;
-  }
-  .marquee-fade--l { left: 0;  background: linear-gradient(90deg, var(--ink), transparent); }
-  .marquee-fade--r { right: 0; background: linear-gradient(270deg, var(--ink), transparent); }
-
-  @media (prefers-reduced-motion: reduce) {
-    .marquee-track { animation: none; }
-    .marquee { overflow-x: auto; }
-  }
 </style>

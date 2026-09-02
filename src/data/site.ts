@@ -57,6 +57,14 @@ export const perfil = {
   ],
 };
 
+/** Agencia de representación de jugadores con la que trabaja el consultorio. */
+export const futbolCracks = {
+  nombre: 'Fútbol Cracks',
+  rol: 'Agencia de representación de jugadores',
+  instagram: 'https://www.instagram.com/fcagentes',
+  handle: '@fcagentes',
+};
+
 export const stats = [
   { k: 'ISAK II',      v: 'Antropometrista certificado' },
   { k: "2022–23",      v: "Newell's Old Boys · 1ra División" },
@@ -82,7 +90,7 @@ export const servicios: Servicio[] = [
     titulo: 'Antropometría',
     subtitulo: 'Estudio de composición corporal ISAK II en Rosario',
     claim: 'Lo que no se mide, no se ajusta.',
-    desc: 'La antropometría es el estudio de la composición corporal bajo el protocolo internacional ISAK: pliegues cutáneos, perímetros musculares y diámetros óseos medidos con calibre e instrumental certificado. A diferencia de una balanza de bioimpedancia, separa con precisión cuánto de tu peso es músculo, cuánto es grasa y cuánto es estructura ósea, y cuánto de eso cambió desde la medición anterior.',
+    desc: 'La antropometría es el estudio de la composición corporal bajo el protocolo internacional ISAK: pliegues cutáneos, perímetros y diámetros óseos, todo medido con instrumental certificado. La antropometría factoriza el cuerpo en 5 componentes: músculo, grasa, huesos, residuos y piel. De esta forma, y evaluando periódicamente, podemos conocer a profundidad cómo está compuesto tu cuerpo y ajustar la alimentación para mejorar el rendimiento.',
     puntos: [
       'Perfil completo de pliegues, perímetros y diámetros óseos',
       'Fraccionamiento de masas y cálculo de somatotipo',
@@ -98,7 +106,7 @@ export const servicios: Servicio[] = [
     titulo: 'Nutrición deportiva',
     subtitulo: 'Plan alimentario para máximo rendimiento',
     claim: 'El plan se adapta al entrenamiento, no al revés.',
-    desc: 'La nutrición deportiva planifica qué, cuánto y cuándo comer en función de la carga de entrenamiento. Periodizo la ingesta semana a semana, defino estrategias de pre, intra y post entrenamiento, pauto la hidratación y armo el protocolo de competencia. Es el mismo trabajo que hice en primera división del fútbol argentino y en planteles de rugby de selección, adaptado a tu deporte y a tu calendario.',
+    desc: 'La nutrición deportiva organiza tu alimentación en función de tu entrenamiento y tus objetivos. Planifico qué, cuánto y cuándo comer, periodizo la ingesta semana a semana y diseño estrategias de alimentación, hidratación y suplementación para cada etapa del entrenamiento y la competencia. Es el mismo enfoque que apliqué trabajando con fútbol de primera división y planteles de rugby de selección, adaptado a tu deporte, tus necesidades y tu calendario.',
     puntos: [
       'Plan alimentario digital ajustado a tu deporte y tus horarios',
       'Infografía educativa y recetario saludable',
@@ -109,23 +117,6 @@ export const servicios: Servicio[] = [
     href: cta.presencial,
     cta: 'Turno de consulta',
   },
-];
-
-export type Institucion = {
-  sigla: string;
-  nombre: string;
-  rol: string;
-  anios: string;
-  /** Ruta a un escudo real en /public/escudos/. Si falta, se dibuja el monograma. */
-  escudo?: string;
-};
-
-export const trayectoria: Institucion[] = [
-  { sigla: 'NOB',  nombre: "Newell's Old Boys",             rol: 'Nutricionista · Primera División', anios: '2022 — 2023' },
-  { sigla: 'CUR',  nombre: 'Club Universitario de Rosario', rol: 'Nutricionista · Rugby',            anios: '2023 — Actualidad' },
-  { sigla: 'CENN', nombre: 'Congreso CENN',                 rol: 'Disertante · Entre Ríos',          anios: 'Educación, Nutrición y Neurociencias' },
-  { sigla: 'ISAK', nombre: 'ISAK Internacional',            rol: 'Antropometrista Nivel II',         anios: 'Certificación vigente' },
-  { sigla: 'FS',   nombre: 'Nutrición FS',                  rol: 'Consultorio propio · Rosario',     anios: 'Mendoza 2290' },
 ];
 
 export const galeria = [
@@ -196,6 +187,14 @@ export const deportistas: Deportista[] = [
       { anio: '24/25', texto: 'Trial Pumitas' },
       { anio: '24/26', texto: 'Concentraciones Pumitas' },
       { anio: '2026', texto: 'Championship Pumitas · Capibaras' },
+    ],
+  },
+  {
+    nombre: 'Denis Pinto',
+    disciplina: 'Fútbol',
+    foto: '/denispinto.jpeg',
+    logros: [
+      { anio: '2024', texto: 'Blooming' },
     ],
   },
   {

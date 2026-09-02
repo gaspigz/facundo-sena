@@ -23,17 +23,21 @@ import { perfil, stats, cta } from '../data/site';
       </p>
 
       <h1 class="hero-title">
-        <span class="ln"><span>Medir.</span></span>
-        <span class="ln"><span>Ajustar.</span></span>
-        <span class="ln"><span class="gold">Rendir.</span></span>
-        <span class="hero-h1sub">Nutricionista deportivo en Rosario</span>
+        <span class="ln"><span>Potenciá tu</span></span>
+        <span class="ln"><span class="gold">rendimiento</span></span>
+        <span class="hero-h1sub">Nutrición deportiva · Rosario</span>
       </h1>
 
       <p class="serif-lead hero-lead">
-        Antropometría ISAK II y planes alimentarios para máximo rendimiento.
-        Mido tu composición corporal con protocolo internacional, periodizo la
-        alimentación según tu entrenamiento y controlo los cambios cada 20 a 30
-        días. Presencial en Mendoza 2290 u online a todo el país.
+        Soy Facundo Sena, Licenciado en Nutrición y Antropometrista ISAK 2.
+        Acompaño a deportistas y personas activas que buscan mejorar su
+        rendimiento, composición corporal y hábitos.
+      </p>
+
+      <p class="hero-lead-2">
+        A través de la evaluación antropométrica y una estrategia nutricional
+        personalizada, transformamos datos en decisiones concretas para que
+        puedas entrenar, recuperarte y rendir.
       </p>
 
       <div class="hero-actions">
@@ -50,7 +54,7 @@ import { perfil, stats, cta } from '../data/site';
     <figure class="hero-shot">
       <div class="hero-frame">
         <img
-          src="/perfil1.jpeg"
+          src="/perfil1.jpg"
           alt="Lic. Facundo Sena, nutricionista deportivo y antropometrista ISAK II en Rosario"
           width="1134" height="2016"
           fetchpriority="high" decoding="async"
@@ -58,10 +62,6 @@ import { perfil, stats, cta } from '../data/site';
         <span class="corner tl" aria-hidden="true"></span>
         <span class="corner br" aria-hidden="true"></span>
       </div>
-      <figcaption class="mono hero-cap">
-        <span>{perfil.isak}</span>
-        <span class="hero-cap-n">01</span>
-      </figcaption>
     </figure>
   </div>
 
@@ -165,22 +165,23 @@ import { perfil, stats, cta } from '../data/site';
   }
 
   .hero-title {
-    font-size: clamp(3.25rem, 13vw, 9.5rem);
-    font-weight: 900;
-    font-variation-settings: 'wdth' 118;
-    line-height: 0.85;
-    letter-spacing: -0.035em;
+    font-size: clamp(2.35rem, 8.6vw, 5.5rem);
+    font-weight: 600;
+    font-variation-settings: 'wdth' 100;
+    line-height: 0.98;
+    letter-spacing: -0.015em;
   }
 
   /* A partir de acá el hero es de dos columnas: el titular ya no dispone del
      ancho completo, así que se mide contra su columna para no recortarse. */
   @media (min-width: 960px) {
-    .hero-title { font-size: min(9.9vw, 8.9rem); }
+    .hero-title { font-size: min(6vw, 5.25rem); }
   }
 
   .hero-title .ln {
     display: block;
     overflow: hidden;
+    padding-bottom: 0.06em;
   }
 
   .hero-title .ln > span {
@@ -190,8 +191,7 @@ import { perfil, stats, cta } from '../data/site';
   }
 
   .hero-title .ln:nth-child(1) > span { animation-delay: 0.22s; }
-  .hero-title .ln:nth-child(2) > span { animation-delay: 0.34s; }
-  .hero-title .ln:nth-child(3) > span { animation-delay: 0.46s; }
+  .hero-title .ln:nth-child(2) > span { animation-delay: 0.36s; }
 
   .hero-h1sub {
     display: block;
@@ -229,6 +229,17 @@ import { perfil, stats, cta } from '../data/site';
     margin-top: clamp(1.5rem, 4vw, 2.25rem);
     opacity: 0;
     animation: fade-up 0.9s var(--ease) 0.72s forwards;
+  }
+
+  .hero-lead-2 {
+    max-width: 48ch;
+    margin-top: 1rem;
+    color: var(--mute);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fade-up 0.9s var(--ease) 0.8s forwards;
   }
 
   .hero-actions {
@@ -280,18 +291,6 @@ import { perfil, stats, cta } from '../data/site';
   }
   .corner.tl { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
   .corner.br { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
-
-  .hero-cap {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 0.75rem;
-    color: var(--mute);
-    font-size: 0.625rem;
-  }
-
-  .hero-cap-n { color: var(--gold); }
 
   /* ---- barra de credenciales ---- */
 
