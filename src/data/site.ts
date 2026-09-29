@@ -65,13 +65,6 @@ export const futbolCracks = {
   handle: '@fcagentes',
 };
 
-export const stats = [
-  { k: 'ISAK II',      v: 'Antropometrista certificado' },
-  { k: "2022–23",      v: "Newell's Old Boys · 1ra División" },
-  { k: '2023–hoy',     v: 'Club Universitario de Rosario' },
-  { k: 'Mat. 1883/2',  v: 'Lic. en Nutrición' },
-];
-
 export type Servicio = {
   n: string;
   titulo: string;
@@ -95,7 +88,7 @@ export const servicios: Servicio[] = [
       'Perfil completo de pliegues, perímetros y diámetros óseos',
       'Fraccionamiento de masas y cálculo de somatotipo',
       'Informe con la evolución medición a medición',
-      'Control cada 20 a 30 días para ajustar el plan',
+      'Controles y evaluaciones mensuales que permiten dar nuevos ajustes a tus comidas',
     ],
     video: '/videos/antropometria.mp4',
     href: cta.antropometria,
