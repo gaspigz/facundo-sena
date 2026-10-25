@@ -9,7 +9,7 @@ import SectionHead from './SectionHead.astro';
       index="04"
       label="Proceso"
       title="Tres pasos, <br />sin <em>vueltas</em>"
-      sub="Así funciona una consulta con nutricionista deportivo en Rosario, desde la primera medición hasta los controles mensuales."
+      sub="Así funciona una consulta conmigo, desde el inicio hasta su seguimiento."
     />
 
     <ol class="pasos">
@@ -29,7 +29,7 @@ import SectionHead from './SectionHead.astro';
       <div class="panel-col">
         <p class="mono panel-k">Consultorio</p>
         <p class="panel-v">Mendoza 2290</p>
-        <p class="panel-note">Timbre color negro · {perfil.ciudad}</p>
+        <p class="panel-note">{perfil.ciudad}</p>
       </div>
 
       <div class="panel-col">
@@ -45,6 +45,12 @@ import SectionHead from './SectionHead.astro';
         <p class="mono panel-k">Online</p>
         <p class="panel-v">A coordinar</p>
         <p class="panel-note">Misma consulta y mismo plan, desde cualquier lugar del país.</p>
+      </div>
+
+      <div class="panel-col">
+        <p class="mono panel-k">Domicilio</p>
+        <p class="panel-v">A coordinar</p>
+        <p class="panel-note">Llevo el consultorio a tu casa en Rosario, con el mismo protocolo de medición.</p>
       </div>
 
       <div class="panel-col panel-col--warn">
@@ -127,6 +133,9 @@ import SectionHead from './SectionHead.astro';
   @media (min-width: 720px)  { .panel { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (min-width: 1080px) { .panel { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
+  /* Cuatro modalidades arriba; el aviso de cancelaciones cierra el panel a lo ancho. */
+  @media (min-width: 720px) { .panel-col--warn { grid-column: 1 / -1; } }
+
   .panel-col {
     background: var(--ink-2);
     padding: clamp(1.4rem, 3vw, 2rem);
@@ -156,6 +165,7 @@ import SectionHead from './SectionHead.astro';
   .panel-note strong { color: var(--bone-dim); font-weight: 500; }
 
   .panel-col--warn { background: var(--ink-3); }
+  .panel-col--warn .panel-note { max-width: 72ch; }
 
   .dias { list-style: none; margin: 0.15rem 0 0; padding: 0; display: grid; gap: 0.5rem; }
 

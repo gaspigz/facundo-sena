@@ -1,5 +1,6 @@
 ---
 import { perfil, cta } from '../data/site';
+import Wordmark from './Wordmark.astro';
 ---
 
 <section class="hero" id="top">
@@ -25,13 +26,17 @@ import { perfil, cta } from '../data/site';
       <h1 class="hero-title">
         <span class="ln"><span>Potenciá tu</span></span>
         <span class="ln"><span class="gold">rendimiento</span></span>
-        <span class="hero-h1sub">Nutrición deportiva · Rosario</span>
+        <span class="hero-h1sub">
+          <Wordmark size="1.75em" />
+          <span class="hero-h1sub-rule" aria-hidden="true"></span>
+          <span>Nutrición deportiva · Rosario</span>
+        </span>
       </h1>
 
       <p class="serif-lead hero-lead">
         Soy Facundo Sena, Licenciado en Nutrición y Antropometrista ISAK 2.
         Acompaño a deportistas y personas activas que buscan mejorar su
-        rendimiento, composición corporal y hábitos.
+        rendimiento, composición corporal y hábitos alimentarios.
       </p>
 
       <p class="hero-lead-2">
@@ -184,7 +189,10 @@ import { perfil, cta } from '../data/site';
   .hero-title .ln:nth-child(2) > span { animation-delay: 0.36s; }
 
   .hero-h1sub {
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.85rem;
     margin-top: clamp(1rem, 2.2vw, 1.5rem);
     font-family: var(--display);
     font-size: clamp(1rem, 1.9vw, 1.375rem);
@@ -198,14 +206,10 @@ import { perfil, cta } from '../data/site';
     animation: fade-up 0.9s var(--ease) 0.58s forwards;
   }
 
-  .hero-h1sub::before {
-    content: '';
-    display: inline-block;
-    width: 1.75rem;
-    height: 1px;
+  .hero-h1sub-rule {
+    width: 1px;
+    height: 1.35em;
     background: var(--gold);
-    vertical-align: 0.35em;
-    margin-right: 0.7rem;
   }
 
   @keyframes rise { to { transform: none; } }
@@ -255,7 +259,7 @@ import { perfil, cta } from '../data/site';
   }
 
   @media (max-width: 959px) {
-    .hero-shot { max-width: 22rem; }
+    .hero-shot { width: 100%; max-width: 22rem; justify-self: center; }
   }
 
   /* Recorte sin fondo: la sombra va en el contenedor y no en la imagen,

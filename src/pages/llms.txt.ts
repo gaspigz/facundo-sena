@@ -24,8 +24,9 @@ ${servicios.map((s) => `- ${s.titulo}: ${s.subtitulo}. ${s.desc}`).join('\n')}
 - Acompaña deportistas de rugby de selección, fútbol profesional, maratón y ultra trail.
 
 ## Horarios
-- Presencial: lunes y miércoles de 15 a 20 h; jueves de 9 a 15 h.
+- Presencial: lunes y miércoles de 14 a 20 h; jueves de 9 a 15 h.
 - Online: a coordinar.
+- Domicilio en Rosario: a coordinar.
 
 ## Preguntas frecuentes
 ${faq.map((f) => `### ${f.q}\n${f.a}`).join('\n\n')}

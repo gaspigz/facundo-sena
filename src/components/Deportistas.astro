@@ -9,50 +9,139 @@ import SectionHead from './SectionHead.astro';
       index="03"
       label="Deportistas"
       title="A quiénes <br /><em>acompaño</em>"
-      sub="Ultra trail, maratón, rugby de selección y fútbol profesional. Distintos deportes, el mismo método de nutrición deportiva: medir la composición corporal, planificar la alimentación y sostener el máximo rendimiento en competencia."
+      sub="Ultra trail, maratón, rugby de selección y fútbol profesional. Distintos deportes, la misma idea: llevar al máximo tu potencial por medio de la alimentación."
     />
 
-    <div class="roster">
-      {deportistas.map((d, i) => (
-        <article class="atleta" style={`--d:${(i % 3) * 110}ms`} data-reveal>
-          <div class="atleta-shot">
-            <img src={d.foto} alt={`${d.nombre}, ${d.disciplina}${d.puesto ? ` (${d.puesto})` : ''}, deportista asesorado por el nutricionista deportivo Facundo Sena`} loading="lazy" decoding="async" />
-            <span class="mono atleta-n">{String(i + 1).padStart(2, '0')}</span>
-          </div>
+    <div class="carrusel" data-carrusel data-reveal>
+      <div
+        class="roster"
+        data-track
+        tabindex="0"
+        role="region"
+        aria-roledescription="carrusel"
+        aria-label="Deportistas destacados"
+      >
+        {deportistas.map((d, i) => (
+          <article class="atleta">
+            <div class="atleta-shot">
+              <img src={d.foto} alt={`${d.nombre}, ${d.disciplina}${d.puesto ? ` (${d.puesto})` : ''}, deportista asesorado por el nutricionista deportivo Facundo Sena`} loading="lazy" decoding="async" />
+              <span class="mono atleta-n">{String(i + 1).padStart(2, '0')}</span>
+            </div>
 
-          <div class="atleta-head">
-            <h3 class="atleta-nombre">{d.nombre}</h3>
-            <p class="mono atleta-disc">
-              {d.disciplina}{d.puesto && <span class="sep"> / </span>}{d.puesto}
-            </p>
-          </div>
+            <div class="atleta-head">
+              <h3 class="atleta-nombre">{d.nombre}</h3>
+              <p class="mono atleta-disc">
+                {d.disciplina}{d.puesto && <span class="sep"> / </span>}{d.puesto}
+              </p>
+            </div>
 
-          <ul class="logros">
-            {d.logros.map((l) => (
-              <li>
-                {l.anio && <span class="mono logro-anio">{l.anio}</span>}
-                <span class="logro-txt">{l.texto}</span>
-              </li>
-            ))}
-          </ul>
-        </article>
-      ))}
+            <ul class="logros">
+              {d.logros.map((l) => (
+                <li>
+                  {l.anio && <span class="mono logro-anio">{l.anio}</span>}
+                  <span class="logro-txt">{l.texto}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+
+      <div class="carrusel-pie">
+        <div class="carrusel-progreso" aria-hidden="true"><span data-thumb></span></div>
+        <div class="carrusel-nav">
+          <button class="carrusel-btn" type="button" data-prev aria-label="Deportista anterior">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M13 7H1M1 7l5.5-5.5M1 7l5.5 5.5" stroke="currentColor" stroke-width="1.3" />
+            </svg>
+          </button>
+          <button class="carrusel-btn" type="button" data-next aria-label="Deportista siguiente">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M1 7h12M13 7 7.5 1.5M13 7l-5.5 5.5" stroke="currentColor" stroke-width="1.3" />
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
+<script>
+  // Carrusel sobre el scroll nativo: las flechas avanzan de a una tarjeta y
+  // la barra dorada marca cuánto del recorrido se ve.
+  document.querySelectorAll<HTMLElement>('[data-carrusel]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-track]')!;
+    const prev = root.querySelector<HTMLButtonElement>('[data-prev]')!;
+    const next = root.querySelector<HTMLButtonElement>('[data-next]')!;
+    const thumb = root.querySelector<HTMLElement>('[data-thumb]')!;
+    const items = Array.from(track.children) as HTMLElement[];
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const paso = () => {
+      const [a, b] = items;
+      return b ? b.offsetLeft - a.offsetLeft : track.clientWidth;
+    };
+
+    const actualizar = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      const x = track.scrollLeft;
+      const visible = Math.min(1, track.clientWidth / track.scrollWidth);
+      prev.disabled = x <= 2;
+      next.disabled = x >= max - 2;
+      thumb.style.width = `${visible * 100}%`;
+      thumb.style.transform = `translateX(${max > 0 ? (x / max) * (1 / visible - 1) * 100 : 0}%)`;
+    };
+
+    let pendiente = false;
+    const programar = () => {
+      if (pendiente) return;
+      pendiente = true;
+      requestAnimationFrame(() => { pendiente = false; actualizar(); });
+    };
+
+    const mover = (dir: number) =>
+      track.scrollBy({ left: dir * paso(), behavior: reduce ? 'auto' : 'smooth' });
+
+    prev.addEventListener('click', () => mover(-1));
+    next.addEventListener('click', () => mover(1));
+    track.addEventListener('scroll', programar, { passive: true });
+    window.addEventListener('resize', programar);
+    actualizar();
+  });
+</script>
+
 <style>
   .deportistas { background: var(--ink-2); }
 
+  /* ---- pista horizontal ---- */
+
   .roster {
     display: grid;
-    gap: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 3vw, 2.5rem);
+    grid-auto-flow: column;
+    grid-auto-columns: clamp(14.5rem, 70vw, 18rem);
+    gap: clamp(1.25rem, 2.5vw, 2rem);
+    align-items: start;
+    margin-inline: calc(var(--gut) * -1);
+    padding-inline: var(--gut);
+    scroll-padding-inline: var(--gut);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
   }
 
-  @media (min-width: 680px)  { .roster { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (min-width: 1080px) { .roster { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .roster::-webkit-scrollbar { display: none; }
 
-  .atleta { display: flex; flex-direction: column; }
+  .roster:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 6px;
+  }
+
+  .atleta {
+    display: flex;
+    flex-direction: column;
+    scroll-snap-align: start;
+  }
 
   .atleta-shot {
     position: relative;
@@ -71,8 +160,7 @@ import SectionHead from './SectionHead.astro';
     transition: filter 0.8s var(--ease), transform 1s var(--ease);
   }
 
-  .atleta:hover .atleta-shot img,
-  .atleta:focus-within .atleta-shot img {
+  .atleta:hover .atleta-shot img {
     filter: grayscale(0) contrast(1.02);
     transform: scale(1.035);
   }
@@ -132,4 +220,48 @@ import SectionHead from './SectionHead.astro';
     letter-spacing: 0.1em;
     font-variant-numeric: tabular-nums;
   }
+
+  /* ---- progreso y flechas ---- */
+
+  .carrusel-pie {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.25rem, 3vw, 2rem);
+    margin-top: clamp(1.75rem, 4vw, 2.75rem);
+  }
+
+  .carrusel-progreso {
+    position: relative;
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+    overflow: hidden;
+  }
+
+  .carrusel-progreso span {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 25%;
+    background: var(--gold);
+    transition: transform 0.25s linear;
+  }
+
+  .carrusel-nav { display: flex; gap: 0.5rem; }
+
+  .carrusel-btn {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    color: var(--bone);
+    cursor: pointer;
+    transition: color 0.35s var(--ease), border-color 0.35s var(--ease), opacity 0.35s var(--ease);
+  }
+
+  .carrusel-btn:hover:not(:disabled) { color: var(--gold); border-color: var(--gold); }
+
+  .carrusel-btn:disabled { opacity: 0.3; cursor: default; }
 </style>

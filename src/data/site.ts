@@ -19,7 +19,7 @@ export const seo = {
     'nutricionista deportivo online',
   ],
   /** Última revisión del contenido. Actualizalo cuando edites textos. */
-  actualizado: '2026-08-21',
+  actualizado: '2026-10-25',
 };
 
 export const WA = 'https://wa.me/543415629177';
@@ -40,7 +40,7 @@ export const perfil = {
   instagram: 'https://instagram.com/nutricion.facundosena',
   instagramHandle: '@nutricion.facundosena',
   seguidores: '4.5K',
-  direccion: 'Mendoza 2290, Timbre negro, Rosario',
+  direccion: 'Mendoza 2290, Rosario',
   ciudad: 'Rosario, Santa Fe',
   telefono: '+54 341 562-9177',
   telefonoE164: '+543415629177',
@@ -83,7 +83,7 @@ export const servicios: Servicio[] = [
     titulo: 'Antropometría',
     subtitulo: 'Estudio de composición corporal ISAK II en Rosario',
     claim: 'Lo que no se mide, no se ajusta.',
-    desc: 'La antropometría es el estudio de la composición corporal bajo el protocolo internacional ISAK: pliegues cutáneos, perímetros y diámetros óseos, todo medido con instrumental certificado. La antropometría factoriza el cuerpo en 5 componentes: músculo, grasa, huesos, residuos y piel. De esta forma, y evaluando periódicamente, podemos conocer a profundidad cómo está compuesto tu cuerpo y ajustar la alimentación para mejorar el rendimiento.',
+    desc: 'La antropometría es el estudio de la composición corporal bajo el protocolo internacional ISAK: pliegues cutáneos, perímetros y diámetros óseos, todo medido con instrumental certificado. La antropometría factoriza el cuerpo en 5 componentes: músculo, grasa, huesos, residuos y piel. De esta forma y evaluando periódicamente, podemos establecer objetivos y conocer cómo está compuesto tu cuerpo, ajustar la alimentación y modificar conductas que nos lleven a mejorar el rendimiento.',
     puntos: [
       'Perfil completo de pliegues, perímetros y diámetros óseos',
       'Fraccionamiento de masas y cálculo de somatotipo',
@@ -97,14 +97,14 @@ export const servicios: Servicio[] = [
   {
     n: '02',
     titulo: 'Nutrición deportiva',
-    subtitulo: 'Plan alimentario para máximo rendimiento',
-    claim: 'El plan se adapta al entrenamiento, no al revés.',
-    desc: 'La nutrición deportiva organiza tu alimentación en función de tu entrenamiento y tus objetivos. Planifico qué, cuánto y cuándo comer, periodizo la ingesta semana a semana y diseño estrategias de alimentación, hidratación y suplementación para cada etapa del entrenamiento y la competencia. Es el mismo enfoque que apliqué trabajando con fútbol de primera división y planteles de rugby de selección, adaptado a tu deporte, tus necesidades y tu calendario.',
+    subtitulo: 'Alimentación para un máximo rendimiento',
+    claim: 'Un plan que se adapta a tu entrenamiento.',
+    desc: 'La nutrición deportiva adapta tu alimentación en función a tu entrenamiento y objetivos. Voy a planificar qué, cuánto y cuándo comer, periodizando ingestas según intensidades de entrenamiento y diseñando estrategias alimentarias, de hidratación y suplementación adaptadas a cada etapa de tu vida deportiva. El mismo enfoque que apliqué trabajando en fútbol de primera división, en rugby y con atletas amateurs y profesionales, adaptado a tu deporte, tus necesidades y tu calendario deportivo.',
     puntos: [
-      'Plan alimentario digital ajustado a tu deporte y tus horarios',
-      'Infografía educativa y recetario saludable',
-      'Lista de supermercado lista para usar',
-      'Presencial en Rosario u online a todo el país',
+      'Plan alimentario digital ajustado a tu deporte y necesidades',
+      'Infografía educativa',
+      'Lista de compras, ideal para evitar errores',
+      'Presencial y a domicilio en Rosario, online en todo el mundo',
     ],
     video: '/videos/nutricion.mp4',
     href: cta.presencial,
@@ -113,9 +113,31 @@ export const servicios: Servicio[] = [
 ];
 
 export const galeria = [
-  { src: '/nob4.jpeg',  alt: "El nutricionista Facundo Sena en el campo de juego durante su etapa en Newell's Old Boys", pie: "Newell's Old Boys · 1ra División" },
+  { src: '/nob11.jpeg', alt: "El nutricionista Facundo Sena en el campo de juego durante su etapa en Newell's Old Boys", pie: "Newell's Old Boys · 1ra División" },
   { src: '/uni1.jpeg',  alt: 'Colación post entrenamiento armada por el nutricionista deportivo Facundo Sena para el plantel de rugby del Club Universitario de Rosario', pie: 'Club Universitario de Rosario' },
   { src: '/cenn3.jpeg', alt: 'Lic. Facundo Sena disertando sobre nutrición deportiva en el congreso CENN, Entre Ríos', pie: 'Disertante en el CENN, Entre Ríos' },
+];
+
+export type Institucion = {
+  nombre: string;
+  /**
+   * Logo en public/logos, versión para fondo oscuro: conserva sus colores y lo
+   * negro pasa a hueso. Sin logo, el nombre se muestra como marca tipográfica.
+   */
+  logo?: string;
+  forma?: 'escudo' | 'horizontal';
+  bajada?: string;
+};
+
+/** Clubes e instituciones de la trayectoria, en el orden en que pasan por el carrusel. */
+export const instituciones: Institucion[] = [
+  { nombre: "Newell's Old Boys",             logo: '/logos/newells.png',       forma: 'escudo' },
+  { nombre: 'Fútbol Cracks',                 logo: '/logos/futbol-cracks.png', forma: 'escudo' },
+  { nombre: 'Club Universitario de Rosario', logo: '/logos/universitario.png', forma: 'escudo' },
+  { nombre: 'Sociedad Tiro Suizo Rosario',   logo: '/logos/tiro-suizo.png',    forma: 'escudo' },
+  { nombre: 'Unión de Rugby de Rosario',     logo: '/logos/urr.png',           forma: 'horizontal' },
+  { nombre: 'CENN',                          bajada: 'Congreso 2022' },
+  { nombre: 'Cafeteros Pro',                 logo: '/logos/cafeteros-pro.png', forma: 'escudo' },
 ];
 
 export type Deportista = {
@@ -209,26 +231,26 @@ export const proceso = [
   {
     n: '01',
     titulo: 'Primera consulta',
-    dur: '60 min',
+    dur: '40 min',
     desc: 'Entrevista nutricional completa, antropometría de partida y las pautas a sostener hasta que llegue el plan.',
   },
   {
     n: '02',
     titulo: 'Plan alimentario',
     dur: 'Entrega digital',
-    desc: 'Llega a los pocos días de la consulta e incluye infografía educativa, recetario saludable y lista de supermercado.',
+    desc: 'Llega a los pocos días de la consulta e incluye infografía educativa, recetario y lista de compras.',
   },
   {
     n: '03',
     titulo: 'Controles',
-    dur: '30 min · cada 20 a 30 días',
-    desc: 'Nueva antropometría, reajuste del plan según lo que muestren los números y educación alimentaria continua.',
+    dur: '30 min · cada 30 a 40 días',
+    desc: 'Antropometría de control, ajuste del plan, recomendaciones y educación alimentaria continua.',
   },
 ];
 
 export const horarios = [
-  { dia: 'Lunes',     hora: '15:00 — 20:00' },
-  { dia: 'Miércoles', hora: '15:00 — 20:00' },
+  { dia: 'Lunes',     hora: '14:00 — 20:00' },
+  { dia: 'Miércoles', hora: '14:00 — 20:00' },
   { dia: 'Jueves',    hora: '09:00 — 15:00' },
 ];
 
@@ -249,19 +271,19 @@ export type Pregunta = { q: string; a: string };
 export const faq: Pregunta[] = [
   {
     q: '¿Qué hace un nutricionista deportivo y en qué se diferencia de un nutricionista clínico?',
-    a: 'Un nutricionista deportivo planifica la alimentación en función de la carga de entrenamiento y del calendario de competencia, no sólo del peso o la salud general. Define cuántos hidratos, proteínas y grasas necesitás cada día según lo que entrenás, qué comer antes, durante y después del estímulo, cómo hidratarte y cómo llegar a la competencia. En Nutrición FS ese plan se apoya siempre en una antropometría, para trabajar con datos de composición corporal y no con estimaciones.',
+    a: 'Un nutricionista deportivo planifica la alimentación en función de la carga de entrenamiento y del calendario de competencia, no sólo del peso o la salud general. Define cuántos hidratos, proteínas y grasas necesitás cada día según lo que entrenás, qué comer antes, durante y después del estímulo, cómo hidratarte y cómo llegar a la competencia. En Nutrición FS ese plan se acompaña siempre con una antropometría, para trabajar con datos de composición corporal y no con estimaciones.',
   },
   {
     q: '¿Qué es la antropometría ISAK y para qué sirve?',
-    a: 'La antropometría ISAK es un protocolo internacional estandarizado para medir la composición corporal. Con calibre e instrumental certificado se toman pliegues cutáneos, perímetros musculares y diámetros óseos, y con esos datos se calcula el fraccionamiento de masas y el somatotipo. Sirve para saber con precisión cuánto de tu peso es músculo, grasa y hueso, y cuánto cambió cada componente entre una medición y la siguiente. Es más preciso y más reproducible que una balanza de bioimpedancia.',
+    a: 'La antropometría es un protocolo de medición internacional estandarizado por ISAK para conocer la composición corporal. Se utilizan calibres e instrumental certificado, se toman pliegues cutáneos, perímetros musculares y diámetros óseos, y con esos datos se calcula el fraccionamiento de masas y somatotipo. Sirve para saber aproximadamente cuánto de tu peso es músculo, grasa y hueso, y cuánto cambió cada componente entre una medición y la siguiente.',
   },
   {
     q: '¿Cuánto dura y qué incluye la primera consulta?',
-    a: 'La primera consulta dura una hora e incluye la entrevista nutricional completa, la antropometría de partida y las pautas alimentarias a sostener hasta que se entregue el plan. Días después recibís el plan alimentario en formato digital, junto con una infografía educativa, un recetario saludable y la lista de supermercado. Después se hacen controles de 30 minutos cada 20 a 30 días.',
+    a: 'La primera consulta dura 40 minutos e incluye la entrevista nutricional completa, la antropometría de partida y las pautas alimentarias a sostener hasta que se entregue el plan. Días después recibís el plan alimentario en formato digital, junto con una infografía educativa, un recetario y la lista de compras. Después se hacen controles de 30 minutos cada 30 a 40 días.',
   },
   {
     q: '¿Atendés online o sólo presencial en Rosario?',
-    a: 'Las dos modalidades. La consulta presencial es en el consultorio de Mendoza 2290, Rosario, los lunes y miércoles de 15 a 20 y los jueves de 9 a 15. La consulta online se coordina por videollamada, día y horario a convenir, y llega a deportistas de todo el país y del exterior. El plan alimentario, el seguimiento y los materiales educativos son los mismos en ambos casos.',
+    a: 'Las dos modalidades. La consulta presencial es en el consultorio ubicado en el centro de la ciudad de Rosario, los días lunes y miércoles de 14 a 20, y jueves de 9 a 15. La consulta online se coordina por videollamada, día y horario a convenir, y llega a deportistas de todo el país y del exterior. El plan alimentario, el seguimiento y los materiales educativos son los mismos en ambos casos. También realizo consultas a domicilio, donde traslado mi consultorio a tu ubicación, trabajando bajo el mismo protocolo que utilizo día tras día.',
   },
   {
     q: '¿Hay que ser deportista de alto rendimiento para hacer una consulta?',
@@ -269,11 +291,11 @@ export const faq: Pregunta[] = [
   },
   {
     q: '¿Cada cuánto conviene repetir la antropometría?',
-    a: 'Cada 20 a 30 días. Ese es el plazo en el que los cambios de masa muscular y masa grasa se vuelven medibles de forma confiable con protocolo ISAK. Medir más seguido suele mostrar variaciones que responden a hidratación o a la hora del día, no a cambios reales de composición corporal. En etapas de pretemporada o de puesta a punto para una competencia el control puede acortarse.',
+    a: 'Cada 30 a 40 días. Ese es el plazo en el que usualmente se suelen hacer registros antropométricos de control. La situación cambia en etapas de pretemporada o de puesta a punto para una competencia, ahí el control puede acortarse.',
   },
   {
     q: '¿Qué deportes atendés?',
-    a: 'Trabajo con deportes de conjunto y de resistencia. Hoy acompaño deportistas de rugby (incluidos seleccionados nacionales), fútbol profesional en Argentina y en Italia, maratón y ultra trail. Antes fui nutricionista de la primera división de Newell’s Old Boys y actualmente del plantel de rugby del Club Universitario de Rosario. Cualquier disciplina con carga de entrenamiento planificada se beneficia del mismo enfoque.',
+    a: 'Trabajo tanto en deportes de equipo como individuales. Hoy acompaño deportistas de rugby, fútbol, maratón, futsal, natación, deportes de contacto, atletismo, ultra trail y más. Básicamente cualquier disciplina con carga de entrenamiento es mi enfoque.',
   },
   {
     q: '¿Cómo saco un turno?',
